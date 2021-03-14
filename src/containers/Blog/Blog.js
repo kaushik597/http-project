@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Route,NavLink} from 'react-router-dom'
+import {Route,NavLink,Switch, Redirect} from 'react-router-dom'
 import axios from '../../axios'
 import Posts from '../Blog/Posts/Posts'
 import NewPost from './NewPost/NewPost'
@@ -20,11 +20,11 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><NavLink to='/'
+                            <li><NavLink to='/posts'
                             exact
                             activeClassName={'my-active'}
                             activeStyle={{color:'red',
-                            textDecoration:'underline'}}>Home</NavLink></li>
+                            textDecoration:'underline'}}>Posts</NavLink></li>
                             <li><NavLink to={{
                                 pathname:'/new-post',
                                 hash:'#submit',
@@ -32,9 +32,14 @@ class Blog extends Component {
                         </ul>
                     </nav>
                 </header>
-               <Route path='/' exact component={Posts}/>
-               <Route path='/new-post' component={NewPost} />
-               <Route path='/:id' exact component={FullPost}/>
+
+                <Switch>
+                    <Route path='/new-post' component={NewPost} />
+                    <Route path='/posts'  component={Posts}/>
+                    <Redirect  from="/"  to="/posts" />
+
+                </Switch>
+              
                
             </div>
         );
